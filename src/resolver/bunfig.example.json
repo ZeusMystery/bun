@@ -1,0 +1,88 @@
+// Everything in here is optional! This entire file is optional!
+{
+  "extends": "./bunfig.base.json",
+  "use": "next",
+
+  // what to write import URLs as
+  "server": {
+    "origin": "http://localhost:3000/",
+    // port is automatically inferred from the origin
+    "port": 3000
+  },
+
+  // What other tools call "entry points", Bun calls "routes"
+  // This is optional when you set "use"
+  // You can also pass it a directory and it will infer via the filesystem router
+  // Option 1:
+  //    "routes": "./pages",
+  // Option 2:
+  //    "routes": {
+  //       "/[foo]": "./pages/[foo].js"
+  //    },
+
+  "macros": {
+    "react-relay": {
+      // import {graphql} from "react-relay"
+      //                       ⬇
+      // import {graphql} from "bun-macro-relay"
+      "graphql": "bun-macro-relay"
+    }
+  },
+  ".env": {
+    // default: ".env", ".env.development", ".env.local"
+    "files": [".env"],
+    "prefix": "NEXT"
+  },
+  "env": {
+    // this is defined by default
+    "NODE_ENV": "'development'"
+  },
+
+  "jsx": {
+    "factory": "React.createElement",
+    "fragment": "React.Fragment",
+    // "preact"
+    "importSource": "react",
+    "classicImportSource": "react",
+    "refresh": "react-refresh",
+    "runtime": "automatic"
+  },
+
+  "alwaysBundle": ["@mybigco/myworkspacepackage"],
+
+  "external": [],
+  ".bun": "node_modules.bun",
+  "loaders": {
+    ".js": "js",
+    ".jsx": "jsx",
+    ".tsx": "tsx",
+    ".ts": "ts",
+    ".json": "json",
+    ".tcjs": "ts",
+    ".tmjs": "ts",
+    ".css": "css"
+  },
+
+  "override": {
+    // platform-specific overrides that inherit from top-level
+    "browser": {
+      "env": {
+        "prefix": "NEXT_PUBLIC_",
+        "vars": {
+          // this is defined by default
+          "process.env.NODE_ENV": "'development'"
+        }
+      }
+    },
+    // platform-specific overrides that inherit from top-level
+    "bun.js": {
+      ".bun": "node_modules.server.bun"
+    },
+    // platform-specific overrides that inherit from top-level
+    "node": {
+      ".bun": "node_modules.node.bun"
+    },
+    // platform-specific overrides that inherit from top-level
+    "bun-macro": {}
+  }
+}
